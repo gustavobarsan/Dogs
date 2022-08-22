@@ -11,24 +11,27 @@ export const LoginForm = () => {
 
   function handleSubmit(event) {
     event.preventDefault();
-    fetch(`${URL}/jwt-auth/v1/token`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: username.value,
-        password: password.value,
-      }),
-    })
-      .then((res) => {
-        console.log(res);
-        return res.json();
+
+    if (username.validate() && password.validate()) {
+      fetch(`${URL}/jwt-auth/v1/token`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username.value,
+          password: password.value,
+        }),
       })
-      .then((json) => {
-        console.log(json);
-        return json;
-      });
+        .then((res) => {
+          console.log(res);
+          return res.json();
+        })
+        .then((json) => {
+          console.log(json);
+          return json;
+        });
+    }
   }
 
   return (
